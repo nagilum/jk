@@ -62,3 +62,7 @@ Maybe add som linqjs features?
 .skip
 .take
 .where
+
+Keybind function:
+
+.keybind('ctrl+f5', function) // or something?

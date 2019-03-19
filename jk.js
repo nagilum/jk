@@ -58,17 +58,50 @@
 // TODO: .post
 // TODO: .put
 
-// TODO: .qs
-// TODO: .qsa
-// TODO: .ce
+/**
+ * Shorthand for document.querySelector.
+ * @param {String} selector
+ * @returns {Element}
+ */
+window.jk.qs = function (selector) {
+    return document.querySelector(selector);
+};
 
+/**
+ * Shorthand for document.querySelectorAll.
+ * @param {String} selector
+ * @returns {Array}
+ */
+window.jk.qsa = function (selector) {
+    return document.querySelectorAll(selector);
+};
+
+/**
+ * Shorthand for document.createElement.
+ * @param {String} tag
+ * @returns {Element}
+ */
+window.jk.ce = function (tag) {
+    return document.createElement(tag);
+};
+
+// TODO: .keybind
 // TODO: .live
-
 // TODO: .route
 
 // #endregion
 
 // #region jk functions.
+
+/**
+ * Cycle through all elements and check for attribute bindings.
+ */
+var bindAttributeFunctions = function () {
+    jk.qsa('*').forEach((el) => {
+        console.log('el', el);
+    });
+};
+
 // #endregion
 
 // #region Initiator.
@@ -77,6 +110,8 @@
  * Init all the things..
  */
 (() => {
+    // Cycle through all elements and check for attribute bindings.
+    bindAttributeFunctions();
 })();
 
 // #endregion
