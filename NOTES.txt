@@ -1,0 +1,59 @@
+Extend DOM with jQ like features:
+
+.addClass
+.removeClass
+
+.attr
+.hasAttr
+.removeAttr
+
+Extend DOM with selectors:
+
+.qs => Element.querySelector
+.qsa => Element.querySelectorAll
+
+Extend jk with selectors and tools:
+
+jk.qs => document.querySelector
+jk.qsa => document.querySelectorAll
+jk.ce => document.createElement
+
+Attribute binding:
+
+jkOnClick="functionName"
+jkOnBlur="functionName"
+jkOnKeyup="functionName"
+jkOn="event,functionName"
+
+    => add jkOnClickAdded and so on..
+
+Ajax features:
+
+jk.delete
+jk.get
+jk.head
+jk.patch
+jk.post
+jk.put
+
+Enable live attribute binding:
+
+jk.live()
+    => setInterval => 250ms
+    => find all elements with attribute starting with 'jkOn'
+    => check for jkOn<>Added
+
+Maybe add som linqjs features?
+
+.all
+.any
+.copy
+.distinct
+.first
+.last
+.orderBy
+.orderByDescending
+.select
+.skip
+.take
+.where
