@@ -43,6 +43,11 @@ jk.live()
     => find all elements with attribute starting with 'jkOn'
     => check for jkOn<>Added
 
+Routes:
+
+jk.route('/', function);
+jk.route('/{guid}/{id}', function, function, function);
+
 Maybe add som linqjs features?
 
 .all
