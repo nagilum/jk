@@ -11,7 +11,7 @@
 
 "use strict";
 
-// #region Extend Element with functions.
+// #region Extend Element with jQuery-like functions.
 
 /**
  * Add a CSS class.
@@ -216,19 +216,203 @@ Element.prototype.toggleAttr = function (name) {
 
 // #endregion
 
-// #region Extend Array with functions.
+// #region Extend Array with LINQ-like functions.
 
-// TODO: .all
-// TODO: .any
-// TODO: .copy
-// TODO: .distinct
-// TODO: .first
-// TODO: .orderBy
-// TODO: .orderByDescending
-// TODO: .select
-// TODO: .skip
-// TODO: .take
-// TODO: .where
+/**
+ * Determine if all elements in the array satisfy a condition.
+ * @param {Function} predicate
+ * @returns {Boolean}
+ */
+Array.prototype.all = function (predicate) {
+    return this.where(predicate).length === this.length;
+};
+
+/**
+ * Determine if any elements in the array satisfy a condition.
+ * @param {Function} predicate
+ * @returns {Boolean}
+ */
+Array.prototype.any = function (predicate) {
+    if (predicate) {
+        return this.where(predicate).length > 0;
+    }
+    else {
+        return this.length > 0;
+    }
+};
+
+/**
+ * Make a copy of an array.
+ * @returns {Array}
+ */
+Array.prototype.copy = function () {
+    let list = [];
+
+    this.forEach((item) => {
+        list.push(item);
+    });
+
+    return list;
+};
+
+/**
+ * Returns distinct elements from an array.
+ * @returns {Array}
+ */
+Array.prototype.distinct = function () {
+    let list = [];
+
+    this.forEach((item) => {
+        let found = false;
+
+        list.forEach((it) => {
+            if (found) {
+                return;
+            }
+
+            if (JSON.stringify(it) === JSON.stringify(item)) {
+                found = true;
+            }
+        })
+
+        if (!found) {
+            list.push(item);
+        }
+    });
+
+    return list;
+};
+
+/**
+ * Return the first element of an array that satisfy the a condition.
+ * @param {Function} predicate
+ * @returns {Object}
+ */
+Array.prototype.first = function (predicate) {
+    if (this.length === 0) {
+        return null;
+    }
+
+    if (predicate) {
+        let list = this.where(predicate);
+
+        return list.length > 0
+            ? list[0]
+            : null;
+    }
+    else {
+        return this[0];
+    }
+};
+
+/**
+ * Sort the elements in the array ascending based on key.
+ * @param {String} key
+ * @returns {Array}
+ */
+Array.prototype.orderBy = function (key) {
+    if (this.length < 2) {
+        return this;
+    }
+
+    let list = [];
+
+    this.forEach((item) => {
+        list.push(item);
+    });
+
+    let type = typeof(this[0]);
+
+    list.sort((a, b) => {
+        switch (type) {
+            case 'boolean':
+                return (a[key] === b[key])
+                    ? 0
+                    : a[key]
+                        ? -1
+                        : 1;
+
+            case 'number':
+                return a[key] - b[key];
+
+            case 'string':
+                let au = a[key].toUpperCase(),
+                    bu = b[key].toUpperCase();
+
+                if (au < bu) {
+                    return -1;
+                }
+
+                if (au > bu) {
+                    return 1;
+                }
+
+                return 0;
+        }
+    });
+
+    return list;
+};
+
+/**
+ * Sort the elements in the array descending based on key.
+ * @param {String} key
+ * @returns {Array}
+ */
+Array.prototype.orderByDescending = function (key) {
+    return this
+        .orderBy(key)
+        .copy()
+        .reverse();
+};
+
+/**
+ * Project each element in array into new form.
+ * @param {Any} map
+ * @returns {Array}
+ */
+Array.prototype.select = function (map) {
+    let list = [];
+
+    this.forEach((item) => {
+        let obj = {};
+
+        for (let key in map) {
+            obj[key] = map[key](item);
+        }
+
+        list.push(obj);
+    });
+
+    return list;
+};
+
+/**
+ * Bypass a specific number of elements in the array.
+ * @param {Number} number
+ * @returns {Array}
+ */
+Array.prototype.skip = function (number) {
+    return this.slice(number);
+};
+
+/**
+ * Return a specific number of elements in the array.
+ * @param {Number} number
+ * @returns {Array}
+ */
+Array.prototype.take = function (number) {
+    return this.slice(0, number);
+};
+
+/**
+ * Filter an array of values based on a predicate.
+ * @param {Function} predicate
+ * @returns {Array}
+ */
+Array.prototype.where = function (predicate) {
+    return this.filter((item) => predicate(item));
+};
 
 // #endregion
 
