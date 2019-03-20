@@ -416,14 +416,200 @@ Array.prototype.where = function (predicate) {
 
 // #endregion
 
-// #region Extend jk with functions.
+// #region Extend jk with AJAX functions.
 
-// TODO: .delete
-// TODO: .get
-// TODO: .head
-// TODO: .patch
-// TODO: .post
-// TODO: .put
+/**
+ * Perform a DELETE call.
+ * @param {String} url
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.delete = function (url, headers) {
+    let settings = {
+        method: 'DELETE'
+    };
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+/**
+ * Perform a GET call.
+ * @param {String} url
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.get = function (url, headers) {
+    let settings = {
+        method: 'GET'
+    };
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+/**
+ * Perform a HEAD call.
+ * @param {String} url
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.head = function (url, headers) {
+    let settings = {
+        method: 'HEAD'
+    };
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+/**
+ * Perform a PATCH call.
+ * @param {String} url
+ * @param {Object} payload
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.patch = function (url, payload, headers) {
+    let settings = {
+        method: 'PATCH'
+    };
+
+    if (payload) {
+        if (typeof(payload) === 'string') {
+            settings.body = payload;
+        }
+        else {
+            settings.body = JSON.stringify(payload);
+
+            if (!headers) {
+                headers = {};
+            }
+
+            let hasCT = false;
+
+            for (let key in headers) {
+                if (key.toLowerCase() === 'content-type') {
+                    hasCT = true;
+                    break;
+                }
+            }
+
+            if (!hasCT) {
+                headers['Content-Type'] = 'application/json';
+            }
+        }
+    }
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+/**
+ * Perform a POST call.
+ * @param {String} url
+ * @param {Object} payload
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.post = function (url, payload, headers) {
+    let settings = {
+        method: 'POST'
+    };
+
+    if (payload) {
+        if (typeof(payload) === 'string') {
+            settings.body = payload;
+        }
+        else {
+            settings.body = JSON.stringify(payload);
+
+            if (!headers) {
+                headers = {};
+            }
+
+            let hasCT = false;
+
+            for (let key in headers) {
+                if (key.toLowerCase() === 'content-type') {
+                    hasCT = true;
+                    break;
+                }
+            }
+
+            if (!hasCT) {
+                headers['Content-Type'] = 'application/json';
+            }
+        }
+    }
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+/**
+ * Perform a PUT call.
+ * @param {String} url
+ * @param {Object} payload
+ * @param {Object} headers
+ * @returns {Promise}
+ */
+window.jk.put = function (url, payload, headers) {
+    let settings = {
+        method: 'PUT'
+    };
+
+    if (payload) {
+        if (typeof(payload) === 'string') {
+            settings.body = payload;
+        }
+        else {
+            settings.body = JSON.stringify(payload);
+
+            if (!headers) {
+                headers = {};
+            }
+
+            let hasCT = false;
+
+            for (let key in headers) {
+                if (key.toLowerCase() === 'content-type') {
+                    hasCT = true;
+                    break;
+                }
+            }
+
+            if (!hasCT) {
+                headers['Content-Type'] = 'application/json';
+            }
+        }
+    }
+
+    if (headers) {
+        settings.headers = headers;
+    }
+
+    return fetch(url, settings);
+};
+
+// #endregion
+
+// #region Extend jk with document functions.
 
 /**
  * Shorthand for document.querySelector.
@@ -451,6 +637,10 @@ window.jk.qsa = function (selector) {
 window.jk.ce = function (tag) {
     return document.createElement(tag);
 };
+
+// #endregion
+
+// #region Extend jk with tool functions.
 
 // TODO: .keybind
 // TODO: .live
